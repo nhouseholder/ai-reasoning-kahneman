@@ -1,0 +1,26 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "_comment": "Council debate using think tool for consensus",
+  "model": "opencode/kimi-k2.6",
+  "agent": {
+    "orchestrator": {
+      "mode": "primary",
+      "prompt_file": "templates/orchestrator-routing.md"
+    },
+    "advocate-for": {
+      "mode": "subagent",
+      "model": "openrouter/openai/gpt-oss-120b:free",
+      "prompt_file": "templates/agent-prompt-footer.md"
+    },
+    "advocate-against": {
+      "mode": "subagent",
+      "model": "openrouter/xiaomi/mimo-v2-flash:free",
+      "prompt_file": "templates/agent-prompt-footer.md"
+    },
+    "judge": {
+      "mode": "subagent",
+      "model": "openrouter/qwen/qwen3-235b-a22b-thinking-2507:free",
+      "prompt_file": "templates/agent-prompt-footer.md"
+    }
+  }
+}

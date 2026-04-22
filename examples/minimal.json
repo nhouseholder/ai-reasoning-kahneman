@@ -1,0 +1,11 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "_comment": "Minimal single-agent setup with 3-tier reasoning",
+  "model": "opencode/kimi-k2.6",
+  "agent": {
+    "assistant": {
+      "mode": "all",
+      "prompt_file": "templates/agent-prompt-footer.md"
+    }
+  }
+}
