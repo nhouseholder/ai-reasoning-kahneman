@@ -136,7 +136,7 @@ Research (specs, memory, related files)
 2. `engram_mem_search` — structured observations (decisions, architecture, bugfixes)
 3. `mempalace_mempalace_search` — verbatim content (meeting notes, detailed patterns, requirements)
 4. `engram_mem_timeline` — chronological context around a past decision
-5. Read project CLAUDE.md, AGENTS.md, handoff.md, anti-patterns.md
+5. Read project OPENCODE.md, AGENTS.md, handoff.md, anti-patterns.md
 
 **WYSIATI Guard (MANDATORY before System 2 claims completion):**
 1. What files, dependencies, or constraints have I not yet examined?

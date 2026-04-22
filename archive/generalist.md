@@ -43,7 +43,7 @@ Before acting, classify the task:
 
 **Phase 1: CONTEXT** (always)
 - Read relevant files before editing
-- Check project conventions (AGENTS.md, CLAUDE.md, existing patterns)
+- Check project conventions (AGENTS.md, OPENCODE.md, existing patterns)
 - Understand what exists before changing it
 
 **Phase 2: EXPLORE** (if needed)
@@ -75,7 +75,7 @@ Before acting, classify the task:
 | **Before spawning large agent on heavy context** | Compact first, then spawn |
 
 ### Pre-Compaction Checkpoint (MANDATORY before /compact)
-Write to `~/.claude/projects/<project>/memory/pre_compact_checkpoint.md`:
+Write to `~/.opencode/projects/<project>/memory/pre_compact_checkpoint.md`:
 - What we were doing (1-2 sentences)
 - Key numbers/data computed this session
 - Decisions made (with rationale)
