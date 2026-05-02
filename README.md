@@ -1,4 +1,4 @@
-# Kahneman AI Reasoning Framework v2.0
+# Kahneman AI Reasoning Framework v3.0
 
 A **portable, operationally enforceable** reasoning framework for AI agents, based on Daniel Kahneman's *Thinking, Fast and Slow* and practical patterns from frontier LLMs (Claude Opus, OpenAI o1/o3, Gemini 2.5 Pro).
 
@@ -19,7 +19,7 @@ Most agent systems use binary fast/slow reasoning. This creates a false dichotom
 ## Core Innovations
 
 1. **Countable evidence budget** — Every mode has a hard limit on tool calls. Breach = mandatory escalation.
-2. **Think tool schema** — Structured scratchpad (JSON) replaces free-text chain-of-thought. Validatable, not hallucinated.
+2. **Completion Gate Lite** — 4 questions at the end of SLOW tasks replace structured think tools. Calibrates over-thinking.
 3. **Meta-cognitive feedback** — Agents self-evaluate whether their mode choice was justified. Enables empirical calibration.
 4. **Skill compilation** — Successful SLOW patterns graduate to FAST via memory caching. The system gets faster over time.
 5. **Pre-mortem + outside view** — From Kahneman: imagine failure before acting; anchor on base rates before specifics.
@@ -27,7 +27,7 @@ Most agent systems use binary fast/slow reasoning. This creates a false dichotom
 ## Quick Start
 
 ### For OpenCode Users
-Copy `integrations/opencode.md` into your agent prompts. Add the think tool to your agent config.
+Copy `integrations/opencode.md` into your agent prompts.
 
 ### For Claude Code Users
 Copy `integrations/claude-code.md` into your `.claude/CLAUDE.md`.
@@ -56,7 +56,7 @@ See `integrations/langchain.md` and `integrations/autogen.md` for adapter patter
 │   ├── reasoning-contract.md    # The 3-tier mode contract
 │   ├── mode-state-machine.md    # State transitions, signals, terminal states
 │   ├── evidence-budget.md       # Countable rules per mode
-│   ├── think-tool-schema.md     # JSON schema for structured reasoning
+│   ├── evidence-budget.md       # Countable rules per mode
 │   └── completion-gate.md       # Mode compliance check
 ├── patterns/
 │   ├── fast-mode.md             # Pattern-matching, single-pass
@@ -73,11 +73,11 @@ See `integrations/langchain.md` and `integrations/autogen.md` for adapter patter
 ├── templates/
 │   ├── agent-prompt-footer.md   # Drop-in footer for any agent prompt
 │   ├── orchestrator-routing.md  # Mode classification + routing layer
-│   └── think-tool-prompt.md     # Inject into tool definitions
+│   └── orchestrator-routing.md  # Mode classification + routing layer
 └── examples/
     ├── minimal.json             # Single-agent config
     ├── multi-agent.json         # 3-agent team with mode negotiation
-    └── council-debate.json      # Council using think tool
+    └── council-debate.json      # Multi-agent reasoning negotiation
 ```
 
 ## How It Works
@@ -96,20 +96,14 @@ JUSTIFICATION: [1 sentence — why this mode?]
 
 One pull = one tool call returning new information.
 
-### 3. Think Tool (DELIBERATE and SLOW modes)
-```
-THINK_TOOL:
-  mode: [deliberate|slow]
-  gist: [1-sentence decision]
-  evidence_log:
-    - pull_1: [tool_call] → [finding]
-  disconfirmer: [one competing explanation]
-  pre_mortem: [2-3 reasons this could fail]
-  wysiati: [what's missing?]
-  decision: [chosen approach]
-  terminal: [done|ask|escalate]
-  reflection: [was this mode justified?]
-```
+### 3. Completion Gate Lite (SLOW mode only)
+Before claiming done, answer 4 questions:
+1. **FALSIFIER:** What single fact would kill this plan?
+2. **ALTERNATIVE:** What's the simplest approach I didn't consider?
+3. **FAILURE:** How could this fail in production?
+4. **SPEED:** Could FAST mode have solved this? Why not?
+
+No JSON schema. No structured scratchpad. Just answer the questions.
 
 ### 4. Terminal States
 All modes end in one of:
