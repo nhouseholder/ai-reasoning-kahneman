@@ -1,4 +1,4 @@
-# Kahneman AI Reasoning Framework v3.0
+# Kahneman AI Reasoning Framework v3.2
 
 A **portable, operationally enforceable** reasoning framework for AI agents, based on Daniel Kahneman's *Thinking, Fast and Slow* and practical patterns from frontier LLMs (Claude Opus, OpenAI o1/o3, Gemini 2.5 Pro).
 
@@ -18,11 +18,15 @@ Most agent systems use binary fast/slow reasoning. This creates a false dichotom
 
 ## Core Innovations
 
-1. **Countable evidence budget** — Every mode has a hard limit on tool calls. Breach = mandatory escalation.
-2. **Completion Gate Lite** — 4 questions at the end of SLOW tasks replace structured think tools. Calibrates over-thinking.
-3. **Meta-cognitive feedback** — Agents self-evaluate whether their mode choice was justified. Enables empirical calibration.
-4. **Skill compilation** — Successful SLOW patterns graduate to FAST via memory caching. The system gets faster over time.
-5. **Pre-mortem + outside view** — From Kahneman: imagine failure before acting; anchor on base rates before specifics.
+1. **Inline mode classification** — Classify before any file reads. No circular dependencies. Safe default: DELIBERATE.
+2. **Countable evidence budget** — Every mode has a hard limit on tool calls + reasoning tokens. Breach = mandatory escalation.
+3. **Confidence scale** — HIGH (90%+), MEDIUM (70–89%), LOW (<70%). Numeric, not vague.
+4. **Concrete verification criteria** — "Tests pass? No lint errors? No hardcoded values?" replaces subjective vibe checks.
+5. **Completion Gate Lite** — 4 questions at the end of SLOW tasks. Calibrates over-thinking.
+6. **Meta-cognitive feedback** — Agents self-evaluate whether their mode choice was justified. Enables empirical calibration.
+7. **Skill compilation** — Successful SLOW patterns graduate to FAST via memory caching. The system gets faster over time.
+8. **Pre-mortem + outside view** — From Kahneman: imagine failure before acting; anchor on base rates before specifics.
+9. **Memory-First Answers** — Required procedure: check memory before answering questions about past work. Never guess.
 
 ## Quick Start
 

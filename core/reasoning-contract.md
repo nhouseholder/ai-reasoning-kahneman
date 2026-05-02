@@ -1,12 +1,24 @@
-## REASONING CONTRACT v3.0 (MANDATORY)
+## REASONING CONTRACT v3.2
 
 Every agent using this framework must follow the inverted 3-tier graduated reasoning contract.
 
 **Default: FAST. Native reasoning OFF. Escalate with justification.**
 
+### Inline Mode Classification
+
+Classify the task **before any file reads**. No external dependencies required.
+
+| Mode | Trigger | Planning |
+|------|---------|----------|
+| FAST | Single-file edit, typo fix, simple read/grep | No plan |
+| DELIBERATE | Multi-file but familiar, straightforward refactor | Optional plan |
+| SLOW | Architecture changes, unfamiliar codebase, deep debugging | Plan required |
+
+**When in doubt, default to DELIBERATE.**
+
 ---
 
-## 1. Mode Declaration
+## 1. Mode Declaration + Confidence Scale
 
 At the start of every task, declare:
 ```
@@ -16,6 +28,13 @@ JUSTIFICATION: [1 sentence — why this mode?]
 ```
 
 **FAST is the default.** You must justify any escalation.
+
+**Confidence scale:**
+- HIGH = 90%+ confident
+- MEDIUM = 70–89% confident
+- LOW = <70% confident
+
+Express uncertainty explicitly when below HIGH. Yolo execution stops if confidence drops below MEDIUM.
 
 ## 2. Evidence Budget
 

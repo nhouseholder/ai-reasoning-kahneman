@@ -40,6 +40,15 @@ If any checkbox is unchecked → do not claim completion.
 | mode_compliance | Followed mode rules | Breached budget |
 | output_scope_ratio | All requirements addressed | Partial implementation |
 
+### Concrete Verification Criteria
+
+Replace subjective checks with these concrete questions:
+- Tests pass?
+- No new lint errors?
+- No hardcoded values left in?
+- No console.log / debug statements?
+- Diff is minimal (only necessary changes)?
+
 ### Low Confidence Protocol
 When signals show concern:
 1. Do NOT claim completion

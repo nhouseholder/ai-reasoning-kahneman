@@ -1,4 +1,4 @@
-# Kahneman AI Reasoning Framework — Specification v3.0
+# Kahneman AI Reasoning Framework — Specification v3.2
 
 ## 1. Design Philosophy
 
@@ -39,9 +39,19 @@ Modern reasoning models overthink by default. They burn thousands of tokens and 
 - `slow`
 - `escalated` (terminal)
 
-### 3.2 Entry Points
+### 3.2 Entry Points (Inline Classification)
 
-**FAST** is the default. Every task starts here unless user explicitly requests deep thinking.
+Classify **before any file reads**. No external dependencies.
+
+| Mode | Trigger | Planning |
+|------|---------|----------|
+| FAST | Single-file edit, typo fix, simple read/grep | No plan |
+| DELIBERATE | Multi-file but familiar, straightforward refactor | Optional plan |
+| SLOW | Architecture changes, unfamiliar codebase, deep debugging | Plan required |
+
+**When in doubt, default to DELIBERATE.**
+
+**FAST** is the default. Every task starts here unless signals fire.
 
 **DELIBERATE triggers:**
 - One unknown in an otherwise clear task
@@ -181,8 +191,31 @@ Saved to memory with topic_key: `reasoning/calibration`.
 - Save pattern if novel solution
 ```
 
-## 11. Version History
+## 11. Confidence Scale
 
-- **v3.0** (2026-04-26): Inverted default (FAST first), token-aware budget, Completion Gate Lite, soft enforcement
-- **v2.0** (2025-04-21): 3-tier model, think tool schema, meta-cognitive feedback
-- **v1.0** (2025-04-20): Binary fast/slow, basic Kahneman framework
+Self-reported confidence for mode decisions and yolo execution:
+- **HIGH** = 90%+ confident
+- **MEDIUM** = 70–89% confident  
+- **LOW** = <70% confident
+
+**Rules:**
+- Express uncertainty explicitly when below HIGH
+- Yolo execution stops if confidence drops below MEDIUM
+- Memory-First Answers required before answering questions about past work
+
+## 12. Concrete Verification Criteria
+
+Replace subjective "would a staff engineer approve this?" with these checkable questions:
+- Tests pass?
+- No new lint errors?
+- No hardcoded values left in?
+- No console.log / debug statements?
+- Diff is minimal (only necessary changes)?
+
+## 13. Version History
+
+- **v3.2** (2026-05-01): Inline mode classification, confidence scale, concrete verification criteria, Memory-First Answers, checkpoint natural boundary trigger, cross-project memory update protocol.
+- **v3.1** (2026-05-01): Agent 2 delta fixes — bootstrapping fix, human-readable SESSION_ID, PROJECT_NAME drift safeguard, plan files in save triggers.
+- **v3.0** (2026-04-26): Inverted default (FAST first), token-aware budget, Completion Gate Lite, soft enforcement.
+- **v2.0** (2025-04-21): 3-tier model, think tool schema, meta-cognitive feedback.
+- **v1.0** (2025-04-20): Binary fast/slow, basic Kahneman framework.
